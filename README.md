@@ -1,103 +1,59 @@
 
-# SCServoArduino
-SCServoArduino is an Arduino library for controlling Feetech SC-Series serial bus servos (SMS/STS series) using Arduino and compatible microcontrollers (ESP32, Teensy, STM32, etc.) via the Arduino IDE.
 
-This library is ported and adapted from Feetech's official SDK, with modifications for microcontroller use. It provides easy communication and control of SC-Series servos using standard Arduino Serial interfaces.
 
-## Quick Start
 
-### Installation
-1. Download or clone this repository: `git clone https://github.com/workloads/scservo`
-2. Copy the `SCServoArduino` folder into your Arduino `libraries` directory.
-3. Restart the Arduino IDE. The library and examples will appear under **File > Examples > SCServoArduino**.
+SC-Series Servo library for Arduino and ESP32
 
-### Supported Platforms
-- Arduino boards (Uno, Mega, Leonardo, etc.)
-- ESP32, ESP8266
-- Teensy
-- STM32 (Arduino core)
-- Any microcontroller compatible with the Arduino IDE and supporting Serial communication
+## Table of Contents
+- Requirements
 
-### Usage
-1. Connect your Feetech SC-Series servos to the microcontroller's serial port (TX/RX).
+## Installation
+
+### Arduino CLI
+To install the latest version:
+```
+arduino-cli lib install SCServoArduino
+```
+To install a specific version:
+```
+arduino-cli lib install SCServoArduino@1.0.0
+```
+To install a development version:
+```
+arduino-cli config set library.enable_unsafe_install true
+arduino-cli lib install --git-url "https://github.com/workloads/scservo.git"
+```
+
+## Usage
+
+1. Connect Feetech SC-Series servos to your board's serial port (TX/RX).
 2. Open an example sketch from **File > Examples > SCServoArduino**.
-3. Upload the sketch to your board.
-4. Open the Serial Monitor at the baud rate specified in the example (typically 1000000 or 115200).
+3. Upload to your board and open Serial Monitor at the required baud rate.
 
-## Library Structure
+For usage examples, see the [examples](examples/) directory.
 
-* Communication layer: SCS
-* Hardware interface layer: SCSerial
-* Application layer: SMSBL, SMSCL, SCSCL, SMS_STS (for different Feetech series)
+## Notes
 
-### Main Classes
-```
-SMSBL sm;      // SMSBL series servo
-SMSCL sm;      // SMSCL series servo
-SCSCL sc;      // SCSCL series servo
-SMS_STS sm_st; // SMS or STS series servo
-```
+### Upstream Compatibility
+This library is based on Feetech's official SDK and aims to remain compatible with upstream releases. See [Feetech's SDK](https://gitee.com/ftservo/SCServoSDK/tree/master) for reference.
 
-Refer to the corresponding header files for each class interface.
+### Library Structure
 
-## Operating Modes
+### Supported Motors
 
-The SMS/STS servos support three operating modes:
+### Operating Modes
 
-### Mode 0: Servo Mode (Position Control)
-- Precise position control
-- Functions: `WritePosEx()`, `RegWritePosEx()`, `SyncWritePosEx()`
-
-### Mode 1: Closed-Loop Wheel Mode (Velocity Control)
-- Continuous rotation with speed feedback
-- Functions: `WriteSpe()`, `RegWriteSpe()`, `SyncWriteSpe()`
-
-### Mode 2: Open-Loop Wheel Mode (PWM Control)
-- Direct motor power control
-- Functions: `WritePwm()`, `RegWritePwm()`, `SyncWritePwm()`
-
-## Examples
-
-All example sketches are located in the `examples/` folder and are compatible with the Arduino IDE. These cover position, speed, PWM control, calibration, feedback, EEPROM programming, broadcast, and more.
-
-## Hardware Specifications
-
-- Supported Motors: STS Series, SMS Series, SMSBL/SMSCL/SCSCL
-- Protocol: Half-duplex asynchronous serial
-- Supported Baud Rates: 1000000, 115200, and others
-
-## Troubleshooting
-
-**Motor Not Responding:**
-- Check power supply and wiring
-- Verify correct baud rate and motor ID
-- Use the `Ping` example to test communication
-
-**Serial Monitor Issues:**
-- Ensure correct baud rate in Serial Monitor
-- Use hardware serial for best results
+### Release Ingressing
+See [GitHub contributors](https://github.com/workloads/scservo/graphs/contributors).
 
 ## License
-
-Based on Feetech's official SDK. See original repository for license details.
-
-## Contributing
-
-Contributions welcome! Please test thoroughly with actual hardware before submitting PRs.
-
-## Quick Start
-
-### Building the Library
 1. Clone this repository and enter the directory: `cd SCServo_Linux`
 2. Build SCServo libraries: `cmake . && make`
-3. Choose an example and enter the directory: `cd examples/SMS_STS/WritePos`
 4. Build the example: `cmake . && make`
 5. Execute the example: `sudo ./WritePos /dev/ttyUSB0`
 
-**Note:** Adjust `/dev/ttyUSB0` according to the serial port of your device (e.g., `/dev/ttyACM0`, `/dev/ttyUSB1`)
 
 ### Serial Port Permissions
-If you encounter permission errors, add your user to the dialout group:
 ```bash
 sudo usermod -a -G dialout $USER
 # Log out and log back in for changes to take effect
